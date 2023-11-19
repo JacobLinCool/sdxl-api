@@ -1,0 +1,14 @@
+name = "sdxl"
+main = "src/index.ts"
+compatibility_date = "2023-11-19"
+workers_dev = false
+
+[ai]
+binding = "AI"
+
+[limits]
+cpu_ms = 1000
+
+[[r2_buckets]]
+binding = "R2"
+bucket_name = "sdxl"
