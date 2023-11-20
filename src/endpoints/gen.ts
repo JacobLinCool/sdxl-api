@@ -1,4 +1,11 @@
-import { OpenAPIRoute, OpenAPIRouteSchema, Query, Str } from "@cloudflare/itty-router-openapi";
+import {
+	Enumeration,
+	Int,
+	OpenAPIRoute,
+	OpenAPIRouteSchema,
+	Query,
+	Str,
+} from "@cloudflare/itty-router-openapi";
 import { Env } from "env";
 import { sdxl } from "sdxl";
 
@@ -8,14 +15,14 @@ export class Gen extends OpenAPIRoute {
 		summary: "Generate an image",
 		parameters: {
 			prompt: Query(String, {
-				description: "The comma-seperated prompt to generate an image from",
+				description: "The prompt to generate an image from",
 			}),
-			steps: Query(Number, {
+			steps: Query(new Int({ default: 20 }), {
 				description: "The number of steps to generate the image",
 				default: 20,
 				required: false,
 			}),
-			format: Query(String, {
+			format: Query(new Enumeration({ values: ["png", "json"] }), {
 				description: "The format of the returns, either `png` or `json`",
 				default: "png",
 				required: false,
@@ -39,8 +46,7 @@ export class Gen extends OpenAPIRoute {
 	} satisfies OpenAPIRouteSchema;
 
 	async handle(request: Request, env: Env, context: any, data: Record<string, any>) {
-		const search = new URL(request.url).searchParams;
-		let prompt = search.get("prompt") || "";
+		let prompt = data.query.prompt || "";
 		if (!prompt) {
 			return Response.json(
 				{
@@ -50,11 +56,11 @@ export class Gen extends OpenAPIRoute {
 				{ status: 400 },
 			);
 		}
-		const step = parseInt(search.get("steps") || "20");
+		const steps = data.query.steps;
 
-		const [image, _t, id] = await sdxl.generate(prompt, step);
+		const [image, _t, id] = await sdxl.generate(prompt, steps);
 
-		const format = search.get("format") || "png";
+		const format = data.query.format;
 		if (format === "json") {
 			const url = new URL(`./retrieve/${id}`, request.url);
 			return Response.json({

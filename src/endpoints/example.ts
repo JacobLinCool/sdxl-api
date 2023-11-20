@@ -1,4 +1,4 @@
-import { OpenAPIRoute, OpenAPIRouteSchema, Query, Str } from "@cloudflare/itty-router-openapi";
+import { Int, OpenAPIRoute, OpenAPIRouteSchema, Query, Str } from "@cloudflare/itty-router-openapi";
 import { Env } from "env";
 import { sdxl } from "sdxl";
 import { example_prompt } from "util";
@@ -8,7 +8,7 @@ export class GenExample extends OpenAPIRoute {
 		tags: ["Image Generation"],
 		summary: "Generate an example image",
 		parameters: {
-			steps: Query(Number, {
+			steps: Query(new Int({ default: 20 }), {
 				description: "The number of steps to generate the image",
 				default: 20,
 				required: false,
@@ -25,10 +25,9 @@ export class GenExample extends OpenAPIRoute {
 	} satisfies OpenAPIRouteSchema;
 
 	async handle(request: Request, env: Env, context: any, data: Record<string, any>) {
-		const search = new URL(request.url).searchParams;
-		const step = parseInt(search.get("steps") || "20");
+		const steps = data.query.steps;
 
-		const [image, _t, id] = await sdxl.generate(example_prompt(), step);
+		const [image, _t, id] = await sdxl.generate(example_prompt(), steps);
 
 		return new Response(image, {
 			headers: {
