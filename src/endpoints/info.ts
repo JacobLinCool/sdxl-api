@@ -25,7 +25,7 @@ export class Info extends OpenAPIRoute {
 
 	async handle(request: Request, env: Env, context: any, data: Record<string, any>) {
 		const { id } = data.params;
-		const info = await sdxl.info(id);
+		const info = await sdxl.info(decodeURIComponent(id));
 		if (!info) {
 			return Response.json(
 				{

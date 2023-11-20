@@ -23,7 +23,7 @@ export class Retrieve extends OpenAPIRoute {
 
 	async handle(request: Request, env: Env, context: any, data: Record<string, any>) {
 		const { id } = data.params;
-		const image = await sdxl.retrieve(id);
+		const image = await sdxl.retrieve(decodeURIComponent(id), true);
 		if (!image) {
 			return Response.json(
 				{

@@ -71,7 +71,12 @@ export class SDXL {
 		};
 	}
 
-	public async retrieve(key: string): Promise<ArrayBuffer | null> {
+	public async retrieve(key: string, stream?: false): Promise<ArrayBuffer | null>;
+	public async retrieve(key: string, stream: true): Promise<ReadableStream | null>;
+	public async retrieve(
+		key: string,
+		stream = false,
+	): Promise<ArrayBuffer | ReadableStream | null> {
 		if (!this.r2) {
 			throw new Error("R2 not bound");
 		}
@@ -84,7 +89,12 @@ export class SDXL {
 		if (!obj) {
 			return null;
 		}
-		return obj.arrayBuffer();
+
+		if (stream) {
+			return obj.body;
+		} else {
+			return obj.arrayBuffer();
+		}
 	}
 
 	public setup({ ai, r2 }: { ai?: Ai; r2?: R2Bucket | null }) {
@@ -108,7 +118,7 @@ export class SDXL {
 		const seconds = d.getSeconds().toString().padStart(2, "0");
 		const time = `${hours}-${minutes}-${seconds}`;
 		const random = Math.random().toString(36).substring(2);
-		const key = `${date}-${time}-${random}.png`;
+		const key = `${date}/${time}-${random}.png`;
 		return key;
 	}
 }
