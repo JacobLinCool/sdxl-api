@@ -4,42 +4,55 @@ settings:
     autoInstallPeers: true
     excludeLinksFromLockfile: false
 
-dependencies:
-    "@cloudflare/ai":
-        specifier: ^1.0.30
-        version: 1.0.30
-    "@cloudflare/itty-router-openapi":
-        specifier: ^1.0.3
-        version: 1.0.3
-    debug:
-        specifier: ^4.3.4
-        version: 4.3.4
-    html-to-md:
-        specifier: ^0.8.4
-        version: 0.8.4
+importers:
+    .:
+        devDependencies:
+            prettier:
+                specifier: ^3.1.0
+                version: 3.1.0
+            prettier-plugin-organize-imports:
+                specifier: ^3.2.4
+                version: 3.2.4(prettier@3.1.0)(typescript@5.2.2)
+            wrangler:
+                specifier: ^3.16.0
+                version: 3.16.0
 
-devDependencies:
-    "@cloudflare/workers-types":
-        specifier: ^4.20231025.0
-        version: 4.20231025.0
-    "@types/debug":
-        specifier: ^4.1.12
-        version: 4.1.12
-    "@types/node":
-        specifier: ^20.9.2
-        version: 20.9.2
-    "@types/service-worker-mock":
-        specifier: ^2.0.4
-        version: 2.0.4
-    prettier:
-        specifier: ^3.1.0
-        version: 3.1.0
-    prettier-plugin-organize-imports:
-        specifier: ^3.2.4
-        version: 3.2.4(prettier@3.1.0)(typescript@5.2.2)
-    wrangler:
-        specifier: ^3.16.0
-        version: 3.16.0
+    packages/cloudflare-worker:
+        dependencies:
+            "@cloudflare/ai":
+                specifier: ^1.0.30
+                version: 1.0.30
+            "@cloudflare/itty-router-openapi":
+                specifier: ^1.0.3
+                version: 1.0.3
+            debug:
+                specifier: ^4.3.4
+                version: 4.3.4
+            html-to-md:
+                specifier: ^0.8.4
+                version: 0.8.4
+        devDependencies:
+            "@cloudflare/workers-types":
+                specifier: ^4.20231025.0
+                version: 4.20231025.0
+            "@types/debug":
+                specifier: ^4.1.12
+                version: 4.1.12
+            "@types/node":
+                specifier: ^20.9.2
+                version: 20.9.2
+            "@types/service-worker-mock":
+                specifier: ^2.0.4
+                version: 2.0.4
+            prettier:
+                specifier: ^3.1.0
+                version: 3.1.0
+            prettier-plugin-organize-imports:
+                specifier: ^3.2.4
+                version: 3.2.4(prettier@3.1.0)(typescript@5.2.2)
+            wrangler:
+                specifier: ^3.16.0
+                version: 3.16.0
 
 packages:
     /@asteasolutions/zod-to-openapi@5.5.0(zod@3.22.4):
