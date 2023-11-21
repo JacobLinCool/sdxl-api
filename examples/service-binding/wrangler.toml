@@ -1,4 +1,4 @@
-name = "sdxl-service-binding-test"
+name = "sdxl-nebula"
 main = "src/index.ts"
 compatibility_date = "2023-11-19"
 workers_dev = true
