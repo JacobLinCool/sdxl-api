@@ -30,3 +30,16 @@ export function example_prompt(): string {
 	const segments = attributes.map(select);
 	return "watercolor, painting, traditional, colorful, " + segments.join(", ");
 }
+
+export async function retry<T>(fn: () => Promise<T>, count = 0, max = 2): Promise<T> {
+	await new Promise((resolve) => setTimeout(resolve, 1000 * (2 ** count - 1)));
+
+	try {
+		return await fn();
+	} catch (err) {
+		if (count >= max) {
+			throw err;
+		}
+		return await retry(fn, count + 1, max);
+	}
+}

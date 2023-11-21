@@ -1,5 +1,6 @@
 import type { Ai } from "@cloudflare/ai";
 import debug from "debug";
+import { retry } from "util";
 
 const log = debug("sdxl");
 log.enabled = true;
@@ -20,12 +21,11 @@ export class SDXL {
 
 		log({ prompt, steps });
 		let start = Date.now();
-		const image: Uint8Array = await this.ai.run(
-			"@cf/stabilityai/stable-diffusion-xl-base-1.0",
-			{
+		const image: Uint8Array = await retry(() =>
+			this.ai.run("@cf/stabilityai/stable-diffusion-xl-base-1.0", {
 				prompt,
 				num_steps: steps,
-			},
+			}),
 		);
 		const time_ms = Date.now() - start;
 		log(`Image generated in ${time_ms}ms`);
