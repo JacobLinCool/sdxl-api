@@ -20,6 +20,14 @@ export class GenExample extends OpenAPIRoute {
 				contentType: "image/png",
 				// @ts-expect-error
 				schema: new Str({ format: "binary" }),
+				headers: {
+					"X-Image-ID": {
+						description: "The ID of the image",
+					},
+					"X-Image-Time": {
+						description: "The time taken to generate the image, in milliseconds",
+					},
+				},
 			},
 		},
 	} satisfies OpenAPIRouteSchema;
@@ -27,12 +35,13 @@ export class GenExample extends OpenAPIRoute {
 	async handle(request: Request, env: Env, context: any, data: Record<string, any>) {
 		const steps = data.query.steps;
 
-		const [image, _t, id] = await sdxl.generate(example_prompt(), steps);
+		const [image, time, id] = await sdxl.generate(example_prompt(), steps);
 
 		return new Response(image, {
 			headers: {
 				"Content-Type": "image/png",
 				"X-Image-ID": id,
+				"X-Image-Time": time.toString(),
 			},
 		});
 	}

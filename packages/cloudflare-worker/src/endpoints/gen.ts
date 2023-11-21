@@ -34,6 +34,14 @@ export class Gen extends OpenAPIRoute {
 				contentType: "image/png",
 				// @ts-expect-error
 				schema: new Str({ format: "binary" }),
+				headers: {
+					"X-Image-ID": {
+						description: "The ID of the image",
+					},
+					"X-Image-Time": {
+						description: "The time taken to generate the image, in milliseconds",
+					},
+				},
 			},
 			"400": {
 				description: "Error",
@@ -58,7 +66,7 @@ export class Gen extends OpenAPIRoute {
 		}
 		const steps = data.query.steps;
 
-		const [image, _t, id] = await sdxl.generate(prompt, steps);
+		const [image, time, id] = await sdxl.generate(prompt, steps);
 
 		const format = data.query.format;
 		if (format === "json") {
@@ -72,6 +80,7 @@ export class Gen extends OpenAPIRoute {
 				headers: {
 					"Content-Type": "image/png",
 					"X-Image-ID": id,
+					"X-Image-Time": time.toString(),
 				},
 			});
 		}

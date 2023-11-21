@@ -39,7 +39,7 @@ router.all("*", () =>
 
 export default {
 	fetch(request, env, context) {
-		const ai = new Ai(env.AI, { debug: true });
+		const ai = new Ai(env.AI, { debug: false });
 		const r2 = env.R2 || null;
 		sdxl.setup({ ai, r2 });
 
