@@ -1,0 +1,21 @@
+{
+	"name": "sdxl-api",
+	"version": "0.0.0",
+	"type": "module",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"build": "tsup"
+	},
+	"dependencies": {
+		"debug": "^4.0.0"
+	},
+	"devDependencies": {
+		"@cloudflare/workers-types": "^4.20231025.0",
+		"@types/debug": "^4.1.12",
+		"tsup": "^8.0.0"
+	}
+}
