@@ -1,0 +1,11 @@
+name = "sdxl-service-binding-test"
+main = "src/index.ts"
+compatibility_date = "2023-11-19"
+workers_dev = true
+
+[limits]
+cpu_ms = 1000
+
+[[services]]
+binding = "sdxl"
+service = "sdxl"
