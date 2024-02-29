@@ -1,9 +1,12 @@
-import type { Ai } from "@cloudflare/ai";
+import type { Ai, modelMappings } from "@cloudflare/ai";
+import type { AiTextToImageInput } from "@cloudflare/ai/dist/tasks/text-to-image";
 import debug from "debug";
 import { retry } from "util";
 
 const log = debug("sdxl");
 log.enabled = true;
+
+export type ModelName = (typeof modelMappings)["text-to-image"]["models"][number];
 
 export class SDXL {
 	constructor(
@@ -12,21 +15,16 @@ export class SDXL {
 	) {}
 
 	public async generate(
-		prompt: string,
-		steps: number,
+		model: ModelName,
+		input: AiTextToImageInput,
 	): Promise<[image: Uint8Array, time_ms: number, id?: string]> {
 		if (!this.ai) {
 			throw new Error("Cloudflare AI not bound");
 		}
 
-		log({ prompt, steps });
+		log(input);
 		let start = Date.now();
-		const image: Uint8Array = await retry(() =>
-			this.ai.run("@cf/stabilityai/stable-diffusion-xl-base-1.0", {
-				prompt,
-				num_steps: steps,
-			}),
-		);
+		const image: Uint8Array = await retry(() => this.ai.run(model, input));
 		const time_ms = Date.now() - start;
 		log(`Image generated in ${time_ms}ms`);
 
@@ -34,8 +32,8 @@ export class SDXL {
 		if (this.r2) {
 			const key = this.key();
 			const metadata = {
-				prompt,
-				steps: steps.toString(),
+				prompt: input.prompt,
+				steps: input.num_steps?.toString(),
 				time: time_ms.toString(),
 			};
 			await this.r2.put(key, image, { customMetadata: metadata });

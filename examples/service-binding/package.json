@@ -9,16 +9,16 @@
 		"tail": "wrangler tail"
 	},
 	"dependencies": {
-		"@cloudflare/ai": "^1.0.30",
-		"@cloudflare/itty-router-openapi": "^1.0.3",
+		"@cloudflare/ai": "^1.0.53",
+		"@cloudflare/itty-router-openapi": "^1.0.10",
 		"debug": "^4.3.4",
 		"sdxl-api": "workspace:^"
 	},
 	"devDependencies": {
-		"@cloudflare/workers-types": "^4.20231025.0",
+		"@cloudflare/workers-types": "^4.20240222.0",
 		"@types/debug": "^4.1.12",
-		"@types/node": "^20.9.2",
+		"@types/node": "^20.11.22",
 		"@types/service-worker-mock": "^2.0.4",
-		"wrangler": "^3.16.0"
+		"wrangler": "^3.30.0"
 	}
 }

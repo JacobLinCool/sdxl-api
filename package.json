@@ -3,15 +3,15 @@
 	"name": "sdxl-api-monospace",
 	"version": "1.0.0",
 	"scripts": {
-		"prepare": "husky install",
+		"prepare": "husky",
 		"format": "prettier --write . --ignore-path .gitignore"
 	},
 	"devDependencies": {
-		"husky": "^8.0.3",
-		"lint-staged": "^15.1.0",
-		"prettier": "^3.1.0",
+		"husky": "^9.0.11",
+		"lint-staged": "^15.2.2",
+		"prettier": "^3.2.5",
 		"prettier-plugin-organize-imports": "^3.2.4",
-		"wrangler": "^3.16.0"
+		"wrangler": "^3.30.0"
 	},
 	"lint-staged": {
 		"*.{ts,js,json,yaml,yml}": [
@@ -26,5 +26,5 @@
 		"url": "https://github.com/JacobLinCool/sdxl-api/issues"
 	},
 	"homepage": "https://jacoblincool.github.io/sdxl-api",
-	"packageManager": "pnpm@8.10.5"
+	"packageManager": "pnpm@8.15.4"
 }

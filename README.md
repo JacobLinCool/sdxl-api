@@ -6,8 +6,8 @@ SDXL API provides a seamless interface for image generation and retrieval using 
 
 ## Features
 
-- **Image Generation:** Generate images from text prompts with customizable steps.
-- **Image Retrieval:** Retrieve generated images and their configurations. (opt-in with R2 binding)
+-   **Image Generation:** Generate images from text prompts with customizable steps.
+-   **Image Retrieval:** Retrieve generated images and their configurations. (opt-in with R2 binding)
 
 ## Usage
 
@@ -28,18 +28,18 @@ service = "sdxl-api-worker"
 import { sdxl } from "sdxl-api";
 
 export default {
-    async fetch(request, env) {
-        // setup the SDXL instance, bind to the service
-        sdxl.setup({ fetcher: env.sdxl });
+	async fetch(request, env) {
+		// setup the SDXL instance, bind to the service
+		sdxl.setup({ fetcher: env.sdxl });
 
-        // generate an image
-        const [image] = await sdxl.generate(
-            "A colorful deep space nebula on a black background.",
-            12,
-        );
+		// generate an image
+		const [image] = await sdxl.generate(
+			"A colorful deep space nebula on a black background.",
+			12,
+		);
 
-        // ...
-    },
+		// ...
+	},
 };
 ```
 

@@ -8,19 +8,25 @@ const base = "https://sdxl.upstream.service/";
 export class SDXL {
 	constructor(protected fetcher?: Fetcher) {}
 
-	public async generate(
-		prompt: string,
-		steps: number,
-	): Promise<[image: Uint8Array, time_ms: number, id?: string]> {
+	public async generate(c: {
+		prompt: string;
+		steps?: number;
+		guidance?: number;
+	}): Promise<[image: Uint8Array, time_ms: number, id?: string]> {
 		if (!this.fetcher) {
 			throw new Error("Service Binding not set up");
 		}
 
-		log({ prompt, steps });
+		log(c);
 
 		const url = new URL("/api/gen", base);
-		url.searchParams.set("prompt", prompt);
-		url.searchParams.set("steps", steps.toString());
+		url.searchParams.set("prompt", c.prompt);
+		if (c.steps) {
+			url.searchParams.set("steps", c.steps.toString());
+		}
+		if (c.guidance) {
+			url.searchParams.set("guidance", c.guidance.toString());
+		}
 
 		let start = Date.now();
 		const res = await this.fetcher.fetch(url);

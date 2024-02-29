@@ -11,11 +11,11 @@
 		"build": "tsup"
 	},
 	"dependencies": {
-		"debug": "^4.0.0"
+		"debug": "^4.3.4"
 	},
 	"devDependencies": {
-		"@cloudflare/workers-types": "^4.20231025.0",
+		"@cloudflare/workers-types": "^4.20240222.0",
 		"@types/debug": "^4.1.12",
-		"tsup": "^8.0.0"
+		"tsup": "^8.0.2"
 	}
 }

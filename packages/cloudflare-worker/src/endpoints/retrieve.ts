@@ -15,7 +15,6 @@ export class Retrieve extends OpenAPIRoute {
 			"200": {
 				description: "Returns an image",
 				contentType: "image/png",
-				// @ts-expect-error
 				schema: new Str({ format: "binary" }),
 			},
 		},
